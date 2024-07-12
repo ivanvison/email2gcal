@@ -19,7 +19,6 @@ load_dotenv()
 username = os.getenv('GMAIL_ACCOUNT_EMAIL')
 password = os.getenv('GMAIL_ACCOUNT_PASSWORD')
 google_calendar_id = os.getenv('GOOGLE_CALENDAR_ID')
-print(username, password, google_calendar_id)
 
 # Gmail connection
 def connect_to_gmail(username, password):
