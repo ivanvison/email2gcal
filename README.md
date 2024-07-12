@@ -78,6 +78,21 @@ Total development time was approximately between 12 hours between tweaking and t
 
 *The part that took the most, at least for me, was the calendar interaction, yearly reccurency with full day events.*
 
+---
+### Structure for Ignored Files
+
+**.env**
+- GMAIL_ACCOUNT_EMAIL=
+- GMAIL_ACCOUNT_PASSWORD="password here"
+- GOOGLE_CALENDAR_ID=
+
+**google_client_secret.json**
+{"installed":{"client_id":"XXX","project_id":"XXX","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"XXX","redirect_uris":["http://localhost"]}}
+
+**tokek.pickle**
+*Not needed. File gets created automatically after authentication*
+---
+
 
 ## Next Steps
 
