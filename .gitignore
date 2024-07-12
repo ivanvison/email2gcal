@@ -1,0 +1,12 @@
+# Additional used scripts
+others/
+
+# dotenv
+.env
+
+# OAuth tokens and secrets
+google_client_secret.json
+token.pickle
+
+# Entries CSV
+bday_cal_entries.csv
