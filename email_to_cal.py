@@ -12,6 +12,21 @@ from google.auth.transport.requests import Request
 import pickle
 from dotenv import load_dotenv
 
+# Path to your token.pickle file
+token_path = 'token.pickle'
+
+# Delete bday_cal_entries.csv if it exists
+if os.path.exists('bday_cal_entries.csv'):
+    os.remove('bday_cal_entries.csv')
+    print("Deleted bday_cal_entries.csv.")
+
+# Delete the token.pickle file if it exists
+# if os.path.exists(token_path):
+#     os.remove(token_path)
+#     print(f"Deleted {token_path}, please run your script again to re-authenticate.")
+# else:
+#     print(f"{token_path} does not exist, proceed with authentication.")
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -111,14 +126,21 @@ def create_event(service, description, date, calendar_id='primary'):
 def main(username, password, calendar_id='primary'):
     mail = connect_to_gmail(username, password)
     email_ids = fetch_emails(mail)
-    print(f"Fetched {len(email_ids)} unseen emails.")
-    
+
+    # End script if there are no emails to process
+    if len(email_ids) == 0:
+        print("No new emails found.")
+        exit()
+    else:
+        print(f"Fetched {len(email_ids)} unseen emails.")    
+
     existing_entries = []
     if os.path.exists('bday_cal_entries.csv'):
         with open('bday_cal_entries.csv', 'r', newline='', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             existing_entries = list(reader)
     
+    print("|---PROCESSING EMAILS AND POPULATING CSV---|")
     with open('bday_cal_entries.csv', 'a', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         if not existing_entries:
@@ -134,6 +156,7 @@ def main(username, password, calendar_id='primary'):
     # Google Calendar integration
     service = authenticate_google_calendar()
     events = read_csv_events("bday_cal_entries.csv")
+    print("|---PROCESSING CSV AND POPULATING GOOGLE CALENDAR---|")    
     for description, date in events:
         if not check_event_exists(service, description, date, calendar_id):
             create_event(service, description, date, calendar_id)
